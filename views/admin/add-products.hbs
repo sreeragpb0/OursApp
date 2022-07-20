@@ -1,0 +1,26 @@
+<style>
+    input{
+        width: 50%;
+    }
+</style>
+<div class="container" style="color: green">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add product</h2>
+            <form action="/admin/add-products" method="post" enctype="multipart/form-data">
+                <label for="Product-name">Product</label><br>
+                <input type="text" name="productName" value="name"><br>
+                <label for="catogory">Category</label><br>
+                <input type="text" name="Category" value="category"><br>
+                <label for="Description">Description</label><br>
+                <input type="text" name="Description" value="About the product..."><br>
+                <label for="Price">Price</label><br>
+                <input type="number" name="Price" value="Price"><br>
+                <label for="image">Image</label><br>
+                <input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
+                <button type="submit" class="btn btn-success mt-3">submit</button><br>
+            </form>
+        </div>
+    </div>
+</div>
