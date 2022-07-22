@@ -8,12 +8,14 @@
                 <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
+      <th scope="col">No</th>
       <th scope="col">Product</th>
       <th scope="col">catogory</th>
       <th scope="col">Description</th>
       <th scope="col">Price</th>
+      <th scope="col">Edit/Delete</th>
       <th scope="col">Image</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -24,6 +26,10 @@
       <td>{{this.Category}}</td>
       <td>{{this.Description}}</td>
        <td>{{this.Price}}</td>
+       <td>
+        <a href="/admin/edit" class="btn btn-primary">Edit</a>
+        <a href="/admin/delete/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete {{this.productName}} ?')">delete</a>
+        </td>
       <td><img style="width:50px; height:50px;" src="/product_images/{{this._id}}.jpg" alt=""></td>
     </tr>
    

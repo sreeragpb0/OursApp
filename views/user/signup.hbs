@@ -1,0 +1,48 @@
+<section class="container">
+    <div class="row container-fluid">
+
+        <div class="col-md-12 ">
+
+            <form style="color:rgb(228, 213, 213);" class="text-center mt-5 w-75 m-auto" action="/signup" method="post">
+
+                <div>
+                    <label class="form-label" for="firstname">First Name</label><br>
+                    <input type="text" name="fname" placeholder="Firstname" class="w-50" />
+
+
+                </div>
+                <div>
+
+                    <label class="form-label" for="lastname">Last Name</label><br>
+                    <input type="text" name="lname" placeholder="Lastname" class="w-50" />
+                </div>
+                <div>
+                    <label class="form-label" for="Email_address">Email address</label><br>
+                    <input type="email" placeholder="test@test.com" name="email" class="w-50" />
+
+                </div>
+
+                <!-- Password input -->
+                <div>
+                    <label for="password">Password</label><br>
+                    <input type="password"  name="password" class="w-50" placeholder="Password"/>
+
+                </div>
+                <div>
+                    <label for="repeatpass">Repeat-Password</label><br>
+                    <input type="password" name="r_password" class="w-50" placeholder="repeat password" />
+
+                </div>
+
+                <div class="p-3 ">
+                    <input type="submit" name="submit" class="btn btn-primary" id="" value="submit">
+                </div>
+
+                <div class="text-center">
+                    <p>Already a member? <a href="/login">Login Here.</a></p>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,25 +1,42 @@
 <style>
-    input{
+    input {
         width: 50%;
+    }
+
+    .add-product {
+        margin-top: 1.5rem;
+        margin-bottom: -2rem;
     }
 </style>
 <div class="container" style="color: green">
-    
+
     <div class="row">
         <div class="col-md-12">
             <h2>Add product</h2>
             <form action="/admin/add-products" method="post" enctype="multipart/form-data">
-                <label for="Product-name">Product</label><br>
-                <input type="text" name="productName" value="name"><br>
-                <label for="catogory">Category</label><br>
-                <input type="text" name="Category" value="category"><br>
-                <label for="Description">Description</label><br>
-                <input type="text" name="Description" value="About the product..."><br>
-                <label for="Price">Price</label><br>
-                <input type="number" name="Price" value="Price"><br>
-                <label for="image">Image</label><br>
-                <input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
-                <button type="submit" class="btn btn-success mt-3">submit</button><br>
+                <div    >
+                    <label for="Product-name">Product</label><br>
+                    <input type="text" name="productName" placeholder="name"><br>
+                </div>
+                <div>
+                    <label for="catogory">Category</label><br>
+                    <input type="text" name="Category" placeholder="category"><br>
+                </div>
+                <div>
+                    <label for="Description">Description</label><br>
+                    <input type="text" name="Description" placeholder="About the product..."><br>
+                </div>
+                <div>
+                    <label for="Price">Price</label><br>
+                    <input type="number" name="Price" placeholder="Price"><br>
+                </div>
+                <div>
+                    <label for="image">Image</label><br>
+                    <input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success mt-3">submit</button><br>
+                </div>
             </form>
         </div>
     </div>
