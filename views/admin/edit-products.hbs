@@ -1,0 +1,48 @@
+<style>
+    input {
+        width: 50%;
+    }
+
+    .add-product {
+        margin-top: 1.5rem;
+        margin-bottom: -2rem;
+    }
+</style>
+<div class="container" style="color: green">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Edit this product</h2>
+            <form action="/admin/edit-products" method="post" enctype="multipart/form-data">
+                <div    >
+                    <label for="Product-name">Product</label><br>
+                    <input type="text" name="productName" placeholder="name" value="{{product.productName}}"><br>
+                </div>
+                <div>
+                    <label for="catogory">Category</label><br>
+                    <input type="text" name="Category" value="{{product.Category}}" placeholder="category"><br>
+                </div>
+                <div>
+                    <label for="Description">Description</label><br>
+                    <input type="text" name="Description" value="{{product.Description}}" placeholder="About the product..."><br>
+                </div>
+                <div>
+                    <label for="Price">Price</label><br>
+                    <input type="number" name="Price" value="{{product.Price}}" placeholder="Price"><br>
+                </div>
+                <div>
+                    <label for="image">Image</label><br><br>
+                    <img src="/product_images/{{product._id}}.jpg" alt="" style="width: 150px; height:auto"><br><br>
+                    <input type="file"  class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
+                </div>
+                <div>
+                    
+                    <input type="hidden"  class="" name="id" value="{{product._id}}"><br>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success mt-3">submit</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

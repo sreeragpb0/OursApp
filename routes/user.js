@@ -41,13 +41,17 @@ router.post('/signup', (req, res) => {
 
 });
 router.post('/login', (req, res) => {
+  console.log(req.body)
   userHelpers.doLogin(req.body).then((response) => {
     if (response.status) {
 
       req.session.loggedIn = true
-      console.log(response.status)
+      //console.log(response.status)
+      //console.log("tes")
       req.session.user = response.user
-
+      console.log("testingsssssssssssssss")
+      console.log(response.user.fname)
+      
       res.redirect('/')
 
     } else {
@@ -65,6 +69,14 @@ router.get('/logout', (req, res) => {
 
 
 })
-
+router.get('/cart', (req, res)=>{
+  if(req.session.user){
+    // console.log("cart area..................................................")
+    //console.log(req.session.user.fname)
+  res.render('user/cart',{admin:false,user:req.session.user})
+  }else{
+    res.redirect('/login')
+  }
+})
 
 module.exports = router;

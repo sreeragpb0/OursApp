@@ -18,7 +18,7 @@ module.exports = {
     },
     doLogin: (userData) => {
         return new Promise(async (resolve, reject) => {
-            
+           // console.log(userData)
             let response = {};
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: userData.email })
 
@@ -45,5 +45,24 @@ module.exports = {
 
         })
 
+    },
+    viewusers: (data) => {
+        if (data){
+
+       
+        return new Promise(async (resolve,reject)=>{
+            let users= await db.get().collection(collection.USER_COLLECTION).find().toArray()
+            if (users){
+                // console.log('testing adddddd startedddddddddddddddddddddddddd')
+                // console.log(users)
+                // console.log('test ends hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+                resolve(users)
+            }else{
+                console.log("failed to fetch the details")
+            }
+        })
+    }else{
+        console.log('failed to fetch those details...')
     }
+}
 }
