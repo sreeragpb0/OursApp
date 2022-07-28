@@ -27,10 +27,10 @@
       <td>{{this.email}}</td>
        <td></td>
        <td>
-        <a href="#" class="btn btn-primary">Edit</a>
-        <a href="#" class="btn btn-danger" onclick="return confirm('Are you sure want to delete {{this.productName}} ?')">delete</a>
+        <a href="/admin/edit-user/{{this._id}}" class="btn btn-primary">Edit</a>
+        <a href="/admin/delete-user/{{this._id}}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete {{this.productName}} ?')">delete</a>
         </td>
-      <td><img style="width:50px; height:50px;" src="/product_images/{{this._id}}.jpg" alt=""></td>
+      <td><img style="width:50px; height:50px;" src="/user-images/{{this._id}}.jpg" alt=""></td>
     </tr>
    
     {{/each}}

@@ -1,6 +1,7 @@
 var db = require('../config/connection');
 var collection = require('../config/collections')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
 
 module.exports = {
     doSignup: (userData) => {
@@ -46,7 +47,7 @@ module.exports = {
         })
 
     },
-    viewusers: (data) => {
+    viewallusers: (data) => {
         if (data){
 
        
@@ -64,5 +65,41 @@ module.exports = {
     }else{
         console.log('failed to fetch those details...')
     }
-}
+},
+deleteUser  :(id) =>{
+    if (id){
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).deleteOne({_id:ObjectId(id)}).then((data)=>{
+                resolve(data)
+            })
+        })
+    }
+},
+viewuser:(id)=>{
+    if(id){
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).findOne({_id:ObjectId(id)}).then((data)=>{
+                resolve(data)
+            })
+        })
+    }
+},
+editUser:(data)=>{
+    if(data){
+        console.log("edit user area....")
+        console.log(data)
+        return new Promise((resolve,reject)=>{
+            db.get().collection(collection.USER_COLLECTION).updateOne({_id:ObjectId(data.id)},{
+                $set:{
+                    fname:data.fname,
+                    lname:data.lname,
+                    email:data.email
+
+                }
+            }).then((res)=>{
+                resolve(res)
+            })  
+        })
+    }
+},
 }

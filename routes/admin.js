@@ -56,9 +56,11 @@ router.post('/add-products', (req, res) => {
   //console.log(req.files.Image)
   productHelpers.addProduct(req.body, (id) => {
     let image = req.files.Image
+    // console.log(id)
     image.mv('./public/product_images/' + id + '.jpg', (err, done) => {
       if (!err) {
         res.render('admin/add-products', { admin: true })
+        console.log('no error on add-product page')
 
 
       }
@@ -78,7 +80,7 @@ router.get('/delete/:id',(req,res)=>{
   let prodId=req.params.id
   productHelpers.deleteProduct(prodId).then((resp)=>{
     res.redirect('/admin/')
-    console.log(resp)
+   //console.log(resp)
   })
   //console.log(prodId)
 })
@@ -93,7 +95,7 @@ router.get('/edit-products/:id',(req,res)=>{
 router.post('/edit-products/',(req,res)=>{
   id=req.body.id
  
-  console.log('this is my id of the ower : ' + id)
+  // console.log('this is my id of the ower : ' + id)
   
    productHelpers.updateProduct(req.body).then(()=>{
     res.redirect('/admin')
@@ -132,16 +134,45 @@ router.post('/logins',(req, res)=>{
 router.get('/viewusers',(req, res)=>{
  
   if(aduser.login){
-    userHelpers.viewusers(aduser.login).then((data)=>{
-      console.log('This is another tests for the day..')
-      console.log(data)
-      console.log("another pretty testing method..")
+    userHelpers.viewallusers(aduser.login).then((data)=>{
+      // console.log('This is another tests for the day..')
+      // console.log(data)
+      // console.log("another pretty testing method..")
       res.render('admin/view-users',{admin:true,data})
       
 
     })
   
+  }else{
+    res.redirect('/admin')
   }
+})
+router.get('/edit-user/:id',(req,res)=>{
+  
+  prodId=req.params.id
+  userHelpers.viewuser(prodId).then((user)=>{ 
+    res.render('admin/edit-user',{admin:true,user})
+  })
+  
+})
+router.post('/edit-user',(req,res)=>{
+  id=req.body.id
+  //console.log(id)
+  userHelpers.editUser(req.body).then(()=>{
+    res.redirect('/admin/viewusers')
+    if(req.files.Image){
+      let image=req.files.Image
+      image.mv('./public/user-images/' + id + '.jpg')
+    }else{console.log('error')}
+  })
+})
+router.get('/delete-user/:id',(req,res)=>{
+
+  id=req.params.id
+  //console.log(id)
+  userHelpers.deleteUser(id).then(()=>{
+    res.redirect('/admin/viewusers')
+  })
 })
 aduser={login:false}
 module.exports = router;

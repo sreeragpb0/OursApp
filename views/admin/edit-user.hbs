@@ -1,0 +1,44 @@
+<style>
+    input {
+        width: 50%;
+    }
+
+    .add-product {
+        margin-top: 1.5rem;
+        margin-bottom: -2rem;
+    }
+</style>
+<div class="container" style="color: green">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Edit this User.</h2>
+            <form action="/admin/edit-user" method="post" enctype="multipart/form-data">
+                <div    >
+                    <label for="first_name">FirstName</label><br>
+                    <input type="text" name="fname" placeholder="name" value="{{user.fname}}"><br>
+                </div>
+                <div>
+                    <label for="catogory">Lastname</label><br>
+                    <input type="text" name="lname" value="{{user.lname}}" placeholder="category"><br>
+                </div>
+                <div>
+                    <label for="Description">Email</label><br>
+                    <input type="text" name="email" value="{{user.email}}" placeholder="About the product..."><br>
+                </div>
+                <div><br>
+                    <label for="image">Image</label><br><br>
+                    <img style="width:100px; height:100px;" src="/user-images/{{user._id}}.jpg" alt=""><br>
+                    <br><input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1">
+                </div>
+                <div>
+                    
+                    <input type="hidden"  class="" name="id" value="{{user._id}}"><br>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success mt-3">submit</button><br>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

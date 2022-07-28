@@ -3,7 +3,7 @@
 
         <div class="col-md-12 ">
 
-            <form style="color:rgb(228, 213, 213);" class="text-center mt-5 w-75 m-auto" action="/signup" method="post">
+            <form style="color:rgb(228, 213, 213);" class="text-center mt-5 w-75 m-auto" action="/signup" method="post" enctype="multipart/form-data">
 
                 <div>
                     <label class="form-label" for="firstname">First Name</label><br>
@@ -32,6 +32,10 @@
                     <label for="repeatpass">Repeat-Password</label><br>
                     <input type="password" name="r_password" class="w-50" placeholder="repeat password" />
 
+                </div>
+                <div><br><br>
+                    <label style="margin-right: 14rem" for="image">Image</label><br>
+                    <input type="file" class="form-control-file text-center" name="Image" id="exampleFormControlFile1"><br>
                 </div>
 
                 <div class="p-3 ">
