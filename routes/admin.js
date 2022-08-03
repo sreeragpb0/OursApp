@@ -109,7 +109,7 @@ router.post('/edit-products/',(req,res)=>{
 })
 router.get('/adminlogin',function (req, res){
   
-  res.render('admin/logins')
+  res.render('admin/logins',{admin:true})
 })
 router.post('/logins',(req, res)=>{
   

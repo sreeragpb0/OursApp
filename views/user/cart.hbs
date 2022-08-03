@@ -1,20 +1,42 @@
 <style>
-    .new{
-        
+    .tstyle{
+        color:yellow;
     }
-    .bg{
-        background: rgb(0, 0, 0);
-        width: 100%;
-        height: 50rem;
-        color:#6cf80f;  ;
-        }
-</style> 
-    <section class="bg">
-<h1 class="new">{{use.fname}}'s Kart.</h1>
-{{!-- <h2>{{user.fname}}</h2> --}}
-    {{!-- {{user}}
-    Test user
-    {{/if}} --}}
-    </section>
+    #a{
+        color:white;
+    }
+</style>
+<div class="container container-fluid">
+  <table class="table table-hover tstyle">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>     
+      <th scope="col">Quantity</th>
+      <th scope="col">Total</th> 
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each products}}
+    <tr>
+      
+      <th scope="row">{{@index}}</th>
+      {{#each this.product}}
+      <td><img src="/product_images/{{this._id}}.jpg" alt="" style="height: 4rem;"></td>
+      <td>{{this.productName}}</td>
+      <td>{{this.Price}}</td>
+      
+      {{/each}}
+      
+      <td><button class="mr-3 btn btn-success">-</button>{{this.quantity}}<button class="ml-3 btn btn-success">+</button></td>
+     <td>Quantity*Price </td>
+      <td><button class="btn btn-danger">remove</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 
-
+</div>

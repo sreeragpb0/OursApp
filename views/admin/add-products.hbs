@@ -32,7 +32,8 @@
                 </div>
                 <div>
                     <label for="image">Image</label><br>
-                    <input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
+                    <img src="" class="" style="height: 8rem;" id="imgview"><br><br>
+                    <input type="file" class="form-control-file" name="Image" id="exampleFormControlFile1" onchange="imgChg(event)"><br>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-success mt-3">submit</button><br>
@@ -41,3 +42,8 @@
         </div>
     </div>
 </div>
+<script>
+    function imgChg(event){
+        document.getElementById("imgview").src=URL.createObjectURL(event.target.files[0])
+    }
+</script>

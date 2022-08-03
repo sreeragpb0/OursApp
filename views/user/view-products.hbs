@@ -6,14 +6,14 @@
             <div class="col-md-3  mb-4 ">
                 <section>
 
-                    <div class="card text-center "
-                        style="width:auto; height:auto; background-image: linear-gradient(to right, rgb(205, 212, 226) , rgb(71, 87, 231));;)">
+                    <div class="card text-center text-white" style="width:auto; height:auto; background-color: transparent;">
                         <img class="card-img-top img-fluid" style="height: 10rem;"
                             src="/product_images/{{this._id}}.jpg" alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title">{{this.productName}}</h4>
-                            <p style="height:50px" class="card-text">{{this.Description}}.</p>
-                            <a href="#" class="btn btn-primary " style="color:white;backgroud:">Add to cart</a>
+                            <p style="height:3rem" class="card-text">{{this.Description}}.</p>
+                            {{!-- <a href="add-to-cart/{{this._id}}" class="btn btn-primary " style="color:white;backgroud:">Add to cart</a> --}}
+                            <button onclick="addToCart('{{this._id}}')" class="btn btn-primary">Add to cart</button>
                         </div>
                     </div>
 

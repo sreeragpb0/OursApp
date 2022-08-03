@@ -1,35 +1,45 @@
-<form action="/admin/logins" method="post">
-  <!-- Email input -->
-  <div class="form-outline mb-4">
-    <input type="email" name="email" class="form-control" />
-    <label class="form-label" for="form2Example1">Email address</label>
-  </div>
+<style>
+  .container{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
 
-  <!-- Password input -->
-  <div class="form-outline mb-4">
-    <input type="password" name="password" class="form-control" />
-    <label class="form-label" for="form2Example2">Password</label>
-  </div>
+<div class="container text-center">
+  <div class="row text-center">
+    <div class="col-md-12 ">
+      <form action="/admin/logins" style="width: 25rem;" method="post">
+        <!-- Email input -->
+        <div class="form-outline mb-4 mt-4">
+          <label class="form-label" for="form2Example1">Email address</label>
+          <input type="email" name="email" placeholder="Email@mail.com" class="form-control" />
+        </div>
 
-  <!-- 2 column grid layout for inline styling -->
-  <div class="row mb-4">
-    <div class="col d-flex justify-content-center">
-      <!-- Checkbox -->
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-        <label class="form-check-label" for="form2Example31"> Remember me </label>
-      </div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form2Example2">Password</label>
+          <input type="password" name="password" placeholder="password" class="form-control" />
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+          <label class="form-check-label" for="form2Example31"> Remember me </label>
+        </div>
+
+
+        <div class="">
+          <!-- Simple link -->
+          <a href="#!">Forgot password?</a>
+        </div>
+
+
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+
+
+      </form>
     </div>
-
-    <div class="col">
-      <!-- Simple link -->
-      <a href="#!">Forgot password?</a>
-    </div>
   </div>
-
-  <!-- Submit button -->
-  <button type="submit"  class="btn btn-primary btn-block mb-4">Sign in</button>
-
-  
-  
-</form>
+</div>

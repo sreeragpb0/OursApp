@@ -31,18 +31,25 @@
                     <input type="number" name="Price" value="{{product.Price}}" placeholder="Price"><br>
                 </div>
                 <div>
-                    <label for="image">Image</label><br><br>
-                    <img src="/product_images/{{product._id}}.jpg" alt="" style="width: 150px; height:auto"><br><br>
-                    <input type="file"  class="form-control-file" name="Image" id="exampleFormControlFile1"><br>
+                    <br><br>
+                    <label for="image">Image</label><br>
+                    <img src="/product_images/{{product._id}}.jpg" alt="" style="width: 150px; height:auto" id="imgview"><br><br>
+                    <input type="file"  class="form-control-file" name="Image" id="exampleFormControlFile1" onchange="Imgchg(event)"><br>
                 </div>
                 <div>
                     
-                    <input type="hidden"  class="" name="id" value="{{product._id}}"><br>
+                    <input type="hidden"  class="" name="id" value="{{product._id}}">
                 </div>
                 <div>
-                    <button type="submit" class="btn btn-success mt-3">submit</button><br>
+                    <button type="submit" class="btn btn-success mt-2">submit</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function Imgchg(event){
+        document.getElementById("imgview").src=URL.createObjectURL(event.target.files[0])
+    }
+</script>
