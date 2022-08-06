@@ -2,6 +2,7 @@ var db = require('../config/connection');
 var collection = require('../config/collections')
 const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
+const { response } = require('../app');
 
 module.exports = {
     doSignup: (userData) => {
@@ -166,6 +167,11 @@ module.exports = {
                         foreignField:'_id',
                         as:'product'
                     }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                    }
                 }
                 
             ]).toArray()
@@ -181,5 +187,118 @@ module.exports = {
             }
             resolve(count)
         })
+    },
+    dProQty:(details)=>{
+        console.log(details)
+        quantity=parseInt(details.quantity)
+        count=parseInt(details.count)
+        return new Promise(async (resolve, reject)=>{
+            if(count==-1 && quantity==1){
+                console.log(details)
+                db.get().collection(collection.CART_COLLECTION)
+                .updateOne({_id:ObjectId(details.cart)},
+                {
+                    $pull:{products:{item:ObjectId(details.product)}}
+                }
+                ).then((response)=>{
+                    resolve({removeProduct:true})
+                })
+
+            }else{
+
+            db.get().collection(collection.CART_COLLECTION)
+            .updateOne({
+                _id:ObjectId(details.cart), 'products.item':ObjectId(details.product)
+            },
+            {
+                $inc:{'products.$.quantity':count}
+            }).then((response)=>{
+                resolve(true)
+            })
+            
+        }   
+        })
+    
+    },
+    iProQty:(details)=>{
+        return new Promise((resolve,reject)=>{
+            console.log(details)
+            count=parseInt(details.count)
+            // let ogcount=await db.get().collection(collection.CART_COLLECTION)
+            // .findOne({_id:ObjectId(details.cart),'products.item':ObjectId(details.product)})
+            // console.log('ogcount:'+ogcount.products[0].quantity)
+            // console.log(ogcount)
+            db.get().collection(collection.CART_COLLECTION)
+            .updateOne({
+                _id:ObjectId(details.cart),'products.item':ObjectId(details.product)
+            },
+            {
+                $inc:{'products.$.quantity':count}
+            }).then((response)=>{
+                resolve(true)
+            })
+        })
+    },
+    removeProduct:(details)=>{
+        // console.log('details')
+        // console.log(details)
+        return new Promise((resolve, reject)=>{
+            db.get().collection(collection.CART_COLLECTION)
+            .updateOne({_id:ObjectId(details.cart),'products.item':ObjectId(details.product)
+        },
+        {
+            $pull:{products:{item:ObjectId(details.product)}}
+        }).then((response)=>{
+            resolve({prodrm:true})
+        })
+        })
+    },
+    getTotalAmt:(user_Id)=>{
+        return new Promise(async (resolve, reject) => {
+            let total = await db.get().collection(collection.CART_COLLECTION).aggregate([
+                {
+                    $match: { user: ObjectId(user_Id) }
+                },
+                {
+                    $unwind:'$products'
+                },
+                {
+                    $project:{
+                        item:'$products.item',
+                        quantity:'$products.quantity'
+                    }
+                },
+                {
+                    $lookup:{
+                        from:collection.PRODUCT_COLLECTION,
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'product'
+                    }
+                },
+                {
+                    $project:{
+                        item:1,quantity:1,product:{$arrayElemAt:['$product',0]}
+                    }
+                },
+                {
+                    $project:{
+                        _id:null,
+                        quantity:'$quantity',
+                        Price:'$product.Price'
+                    }
+                },
+                // {
+                //     $group:{
+                //         _id:null,
+                //         total:{$sum:{$multiply:['$quantity','$Price']}}
+                //     }
+                // }
+                
+            ]).toArray()
+             console.log(total)
+            resolve(total)
+        })
+        
     }
 }

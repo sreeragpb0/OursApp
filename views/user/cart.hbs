@@ -1,42 +1,150 @@
 <style>
-    .tstyle{
-        color:yellow;
-    }
-    #a{
-        color:white;
-    }
+  .tstyle {
+    color: yellow;
+  }
+
+  #a {
+    color: white;
+  }
 </style>
-<div class="container container-fluid">
-  <table class="table table-hover tstyle">
-  <thead>
-    <tr>
+<div class="container container-fluid tstyle">
+  {{#if products}}
+  <table class="table table-hover tstyle mt-5">
+    <thead>
+
       <th scope="col">#</th>
       <th scope="col">Product</th>
       <th scope="col">Name</th>
-      <th scope="col">Price</th>     
+      <th scope="col">Price</th>
       <th scope="col">Quantity</th>
-      <th scope="col">Total</th> 
+      <th scope="col">Total</th>
       <th scope="col">Delete</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each products}}
-    <tr>
-      
-      <th scope="row">{{@index}}</th>
-      {{#each this.product}}
-      <td><img src="/product_images/{{this._id}}.jpg" alt="" style="height: 4rem;"></td>
-      <td>{{this.productName}}</td>
-      <td>{{this.Price}}</td>
-      
-      {{/each}}
-      
-      <td><button class="mr-3 btn btn-success">-</button>{{this.quantity}}<button class="ml-3 btn btn-success">+</button></td>
-     <td>Quantity*Price </td>
-      <td><button class="btn btn-danger">remove</button></td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each products}}
+      <tr>
 
-</div>
+        <th scope="row">{{@index}}</th>
+
+
+        <td><img src="/product_images/{{this.product._id}}.jpg" alt="" style="height: 4rem;"></td>
+        <td>{{this.product.productName}}</td>
+        <td id="pdpr">{{this.product.Price}}</td>
+
+
+
+        <td><button class="mr-3 btn btn-success" onclick="decrement('{{this._id}}','{{this.product._id}}')">_</button>
+          <span id="{{this.product._id}}">{{this.quantity}}</span>
+          <button class="ml-3 btn btn-success" onclick="increment('{{this._id}}','{{this.product._id}}')">+</button>
+        </td>
+       
+        {{#each x}}
+        <td id="prc">{{x.total0}} </td>
+        {{/each}}
+        <td><button class="btn btn-danger" onclick="removeProd('{{this._id}}','{{this.product._id}}')">remove</button>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  </div>
+  <div class="float-right pr-5">
+    <h3 id="total-cart" style="width: 100%;" class="float-left mr-5">Total=50000</h3>
+   <a href="/place-order" class="btn btn-primary mb-4 pr-3" style="width: 100%;">Place order</a>
+  </div>
+  {{else}}
+  <div class="text-center tstyle">
+    <h2>
+      Go and purchase 4 your mood...
+    </h2>
+    <Img onclick="empty()" src="/images/empty.jpeg" class="" style="width: 100%;"></Img>
+  </div>
+  {{/if}}
+
+
+
+
+<script>
+  function increment(cartId, proId) {
+    let quantity = parseInt(document.getElementById(proId).innerHTML)
+    console.log(quantity)
+    let count = 1
+    $.ajax({
+      url: '/increment-proQty',
+      data: {
+        cart: cartId,
+        product: proId,
+        count: count
+      },
+      method: 'post',
+      success: (response) => {
+        console.log(response)
+        if (response) {
+
+          document.getElementById(proId).innerHTML = quantity + count
+
+
+        } else (
+          console.log('no response...')
+        )
+
+      }
+    })
+  }
+  function decrement(cartId, proId) {
+    let quantity = parseInt(document.getElementById(proId).innerHTML)
+    let count = -1
+    console.log(typeof (count))
+    $.ajax({
+      url: '/decrement-proQty',
+      data: {
+        cart: cartId,
+        product: proId,
+        quantity: quantity,
+        count: count
+      },
+      method: 'post',
+      success: (response) => {
+        if (response.removeProduct) {
+          alert('Are you sure want to remove this product?')
+          location.reload()
+
+        } else {
+          console.log(response)
+          document.getElementById(proId).innerHTML = quantity + count
+        }
+      }
+    })
+  }
+  function removeProd(cartId, proId) {
+    $.ajax({
+      url: '/remove-product',
+      data: {
+        cart: cartId,
+        product: proId
+      },
+      method: 'post',
+      success: (response) => {
+        if(response.prodrm){
+          console.log(response)
+          location.reload()
+
+        }else{
+          alert('nothing happening')
+        }
+        
+
+      }
+
+    })
+  }
+  function empty(proId) {
+    alert("Your cart is empty...c")
+  }
+  function price(){
+    pr=parseInt(document.getElementById('prc').innerHTML)
+    qty=parseInt(document.getElementById(proId).innerHTML)
+    console.log(pr*qty)
+  }
+</script>

@@ -104,21 +104,50 @@ router.get('/cart', verifyLogin,async(req, res)=>{
   console.log(user)
   console.log('Teesst oneeeeeeeeeeeeeeeeeeeeeeeeeee..............')
   let products=await userHelpers.getCartProducts(user._id)
+  i=0 
+  prod=Object.keys(products)
   console.log(products)
-  console.log(typeof(products))
-
- 
- 
-
-  res.render('user/cart',{admin:false,user,products})
+  p=parseInt(prod[prod.length-1])
+    x={};
+  while(i<=p){
+    total=parseInt(products[String(i)].quantity)*parseInt(products[String(i)].product.Price)
+    x['total'+i]=total
+     i++
+  }
+    console.log(Object.values(x)) 
+    console.log(typeof(x))
+    console.log(x)
+  res.render('user/cart',{admin:false,user,products,x})
 })
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
-  console.log('We are getting nice..................................')
   userId=req.session.user._id
   userHelpers.add_to_cart(req.params.id,userId).then(()=>{
-    //res.redirect('/')
   res.json({status:true})
   })
+})
+router.post('/increment-proQty',verifyLogin,(req,res,next)=>{
+  userHelpers.iProQty(req.body).then((response)=>{
+    res.json(response)
+
+  })
+
+})
+router.post('/decrement-proQty',verifyLogin,(req,res,next)=>{
+  userHelpers.dProQty(req.body).then((response)=>{
+    res.json(response)
+
+  })
+})
+router.post('/remove-product',verifyLogin,(req,res,next)=>{
+  userHelpers.removeProduct(req.body).then((response)=>{
+    res.json(response)
+    
+  })
+})
+router.get('/place-order',verifyLogin,async(req,res,next)=>{
+  let total=await userHelpers.getTotalAmt(req.session.user._id)
+  console.log(req.session.user._id)
+  res.render('user/place-order',{admin:false,total})
 })
 
 module.exports = router;
