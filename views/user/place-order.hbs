@@ -1,57 +1,77 @@
-
-        <form >
-            <div style="color: rgb(27, 146, 73);" class="container container-fluid">
+<form id="Checkout-PO" action="submit">
+  <div style="color: rgb(27, 146, 73);" class="container container-fluid">
     <div class="row">
-    <div class="col-md-6">
-  <div class="form-row">
-    <div class="col-md-12 mb-1">
-        <h1>Enter Delivery details.</h1>
-      <label for="validationServer01">First name</label>
-      <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" required>
-    </div>
-    <div class="col-md-12 mb-1">
-      <label for="validationServerHousename">HouseName</label>
-      <div class="input-group">
-        <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="HouseName" aria-describedby="inputGroupPrepend3" required>
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-12 mb-1">
-      <label for="validationServer03">City</label>
-      <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="City" required>
-    </div>
-    <div class="col-md-12 mb-1">
-      <label for="validationServer04">State</label>
-      <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="State" required>
-    </div>
-    <div class="col-md-12 mb-1">
-      <label for="validationServer05">Zip</label>
-      <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Zip" required>
-    </div>
-      <div class="col-md-12 mb-1">
-      <label for="validationServer05">Mobile No</label>
-      <input type="tel" class="form-control is-invalid" id="validationServer05" placeholder="Mobile" required>
-    </div>
-  </div>
-  </div>
-  <div class="col-md-6" >
-        <div class="container" style="border-style: solid; " >
-            <h1>Total amount : {{total}}</h1>
-        <h3>payment methods:</h4>
-        <label for="">Cod:</label>
-        <input type="radio" name="pm"><br>
-        <label for="cod">Online purchase:</label>
-        <input type="radio" name="pm"><br>
-        <button class="btn btn-primary mb-3 mr-auto" type="submit">Check Out</button>
+      <div class="col-md-6 col-sm-6">
+        <div class="form-row">
+          <div class="col-md-12 col-xs-6 mb-1">
+            <h1>Enter Delivery details.</h1>
+            <label for="validationServer01">First name</label>
+            <input type="text" class="form-control is-valid" name="fname" value="{{user.fname}}" id="validationServer01" placeholder="First name" required>
+          </div>
+          <div class="col-md-12 col-xs-6 mb-1">
+            <label for="validationServerHousename">HouseName</label>
+            <div class="input-group">
+              <input type="text" class="form-control is-invalid" value="pachan" id="validationServerUsername" placeholder="HouseName"
+                aria-describedby="inputGroupPrepend3" name="HouseName" required>
+            </div>
+          </div>
         </div>
-        
+        <div class="form-row">
+          <div class="col-md-12 col-xs-6 mb-1">
+            <label for="validationServer03">City</label>
+            <input type="text" class="form-control is-invalid" name="City" value="Thrissr" id="validationServer03" placeholder="City" required>
+          </div>
+          <div class="col-md-12 col-xs-6 mb-1">
+            <label for="validationServer04">State</label>
+            <input type="text" class="form-control is-invalid" name="State" value="Kerala" id="validationServer04" placeholder="State" required>
+          </div>
+          <div class="col-md-12 col-xs-6 mb-1">
+            <label for="validationServer05">Zip</label>
+            <input type="text" class="form-control is-invalid" name="Zip" value="121221" id="validationServer05" placeholder="Zip" required>
+          </div>
+          <div class="col-md-12 col-xs-6 mb-1">
+            <label for="validationServer05">Mobile No</label>
+            <input type="tel" name="Mobile" value="74747474747" class="form-control is-invalid" id="validationServer05" placeholder="Mobile" required>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-xs-6" style="">
+        <div class="container container-fluid" style="border-style: solid;margin-top: 7rem; ">
+          <h1>Total amount : Rs:{{total}}/-</h1>
+          <h3>payment methods:</h4>
+            <label for="cod">Online Payment:</label>
+            <input type="radio" name="payMethod" value="Online"><br>
+            <label for="" style="margin-left: 79px;">COD:</label>
+            <input type="radio" name="payMethod" value="COD"><br>
+            <input type="text" name="userId" value="{{user._id}}" hidden>
+            <button class="btn btn-primary mb-3" style="margin-left: 19rem;" type="submit">Check Out</button>
+        </div>
+
+      </div>
+
     </div>
 
-</div>
-  
-  
-</div>
+
+
+  </div>
 </form>
-    
-    
+
+<script>
+  $("#Checkout-PO").submit((e) => {
+    e.preventDefault()
+    $.ajax({
+      url: '/place-order',
+      method: 'post',
+      data: $("#Checkout-PO").serialize(),
+      success: (response) => {
+        if(response.status){
+          window.location='/myOrders';
+
+        }else{
+          console.log('else part is working........')
+          window.location='/';
+        }
+      }
+    })
+  })
+</script>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6"><br><br><hr>
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">No</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Delivery Date expected</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each myOrders}}
+                    <tr>
+                        <th scope="row">{{@index}}</th>
+                        <td><img class="img-fluid" src="product_images/{{this.item}}.jpg" style="width: 5rem;height: 5rem;"></td>
+                        <td>Name:{{../username}}</td>
+                        <td>{{../status}}</td>
+                        <td>12-21-2022</td>
+                        {{/each}}
+                    </tr>
+
+
+                </tbody>
+            </table>
+            
+        </div>
+        <div class="col-sm-6 container-fluid">
+            <h3 class="text-center text-info">Total:Rs: {{total}}/-</h3>
+        </div>
+    </div>
+</div>

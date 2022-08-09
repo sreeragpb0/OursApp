@@ -5,6 +5,7 @@ var collection = require('../config/collections')
 
 module.exports = {
     addProduct: (product, callback) => {
+        console.log(product)
 
         db.get().collection(collection.PRODUCT_COLLECTION).insertOne(product).then((data) => {
             console.log(data)
@@ -37,6 +38,7 @@ module.exports = {
         })
     },
     updateProduct:(productData)=>{
+        prod=parseInt(productData.Price)
 
         console.log(productData)
         return new Promise((resolve,reject)=>{
@@ -44,12 +46,17 @@ module.exports = {
                 $set:{
                     productName:productData.productName,
                     Description:productData.Description,
-                    Price:productData.Price,
+                    Price:prod,
                     Category:productData.Category
                 }
             }).then((response)=>{
                 resolve(response)
             })
         })
+    },
+    viewProducts:(prodsIds)=>{
+        for(let i=0; i<prodsIds.length;i++){
+            console.log(prodsIds[i].item)
+        }
     }
 }

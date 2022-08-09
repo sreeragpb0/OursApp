@@ -39,9 +39,7 @@
           <button class="ml-3 btn btn-success" onclick="increment('{{this._id}}','{{this.product._id}}')">+</button>
         </td>
        
-        {{#each x}}
-        <td id="prc">{{x.total0}} </td>
-        {{/each}}
+        <td id="prc">{{total}} </td>
         <td><button class="btn btn-danger" onclick="removeProd('{{this._id}}','{{this.product._id}}')">remove</button>
         </td>
       </tr>
@@ -50,7 +48,7 @@
   </table>
   </div>
   <div class="float-right pr-5">
-    <h3 id="total-cart" style="width: 100%;" class="float-left mr-5">Total=50000</h3>
+    <h3 id="total-cart" style="width: 100%;" class="float-left mr-5 tstyle" >Total={{total}}</h3>
    <a href="/place-order" class="btn btn-primary mb-4 pr-3" style="width: 100%;">Place order</a>
   </div>
   {{else}}
@@ -83,6 +81,7 @@
         if (response) {
 
           document.getElementById(proId).innerHTML = quantity + count
+          location.reload()
 
 
         } else (
@@ -113,6 +112,7 @@
         } else {
           console.log(response)
           document.getElementById(proId).innerHTML = quantity + count
+          location.reload()
         }
       }
     })

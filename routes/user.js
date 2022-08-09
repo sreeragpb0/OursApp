@@ -100,24 +100,20 @@ router.get('/logout', (req, res) => {
 router.get('/cart', verifyLogin,async(req, res)=>{
   //console.log(req.session.user._id)
   user=req.session.user
-  console.log('Teesst oneeeeeeeeeeeeeeeeeeeeeeeeeee..............')
-  console.log(user)
-  console.log('Teesst oneeeeeeeeeeeeeeeeeeeeeeeeeee..............')
-  let products=await userHelpers.getCartProducts(user._id)
-  i=0 
-  prod=Object.keys(products)
-  console.log(products)
-  p=parseInt(prod[prod.length-1])
-    x={};
-  while(i<=p){
-    total=parseInt(products[String(i)].quantity)*parseInt(products[String(i)].product.Price)
-    x['total'+i]=total
-     i++
+  // console.log('Teesst oneeeeeeeeeeeeeeeeeeeeeeeeeee..............')
+  // console.log(user)
+  // console.log('Teesst oneeeeeeeeeeeeeeeeeeeeeeeeeee..............')
+  let products=await userHelpers.getCartProducts(user._id) 
+  if(products.length!=0){
+// let pq=parseInt(products[0].quantity)
+   // console.log('if part is working...........')
+  let total=await userHelpers.getTotalAmt(req.session.user._id)
+  // console.log(total.total)
+  res.render('user/cart',{admin:false,user,products,total:total.total})
+  }else{
+    // console.log('else part is working...........')
+    res.render('user/cart',{admin:false,user})
   }
-    console.log(Object.values(x)) 
-    console.log(typeof(x))
-    console.log(x)
-  res.render('user/cart',{admin:false,user,products,x})
 })
 router.get('/add-to-cart/:id',verifyLogin,(req,res)=>{
   userId=req.session.user._id
@@ -146,8 +142,53 @@ router.post('/remove-product',verifyLogin,(req,res,next)=>{
 })
 router.get('/place-order',verifyLogin,async(req,res,next)=>{
   let total=await userHelpers.getTotalAmt(req.session.user._id)
-  console.log(req.session.user._id)
-  res.render('user/place-order',{admin:false,total})
+  // console.log(req.session.user._id)
+   console.log(total)
+  res.render('user/place-order',{admin:false,total:total.total,user:req.session.user})
+  // console.log("user filled...")
+  // req.session.user.total=total
+  
+})
+router.post('/place-order',verifyLogin,async (req,res)=>{
+  let products=await userHelpers.getCartProductList(req.body.userId)
+  let totalPrice=await userHelpers.getTotalAmt(req.body.userId)
+  if(totalPrice.total.length!=0){ 
+    totalPrice=totalPrice.total 
+    products=products.cartProd.products
+  userHelpers.placeOrder(req.body,products,totalPrice).then((response)=>{
+    res.json(response)
+  })
+}else{
+  res.json({status:false})
+
+}
+
+  
+})
+router.get('/myOrders',verifyLogin,async(req,res,next)=>{
+  let userId=req.session.user._id
+  let myOrders=await userHelpers.getMyOrders(userId)
+  console.log('my Orders at user.js.....................')
+  console.log(Object.keys(myOrders))
+  console.log(Object.values(myOrders))
+  console.log(myOrders)
+  let myOrderProd=myOrders.products
+  let total=myOrders.total
+  let status=myOrders.status
+  let username=myOrders.deliveryDetails.user
+  let prodName=[];
+   prod=await productHelpers.viewProducts(myOrderProd)
+   prodName.push(prod)
+  // console.log('totallllllllllllllllllllllllllllll')
+    console.log(prodName)
+ 
+  // console.log('my total at user.js.....................endingnggggggggggggggggg')
+  // console.log(myOrderProd)
+  // console.log('myOrdersssssssssssssssssssssss at user.js')
+    res.render('user/shipmentDetails',{admin:false,user:req.session.user,myOrders:myOrderProd,total,status,username})
+
+  
+
 })
 
 module.exports = router;
