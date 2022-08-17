@@ -168,9 +168,11 @@ router.post('/place-order',verifyLogin,async (req,res)=>{
 router.get('/myOrders',verifyLogin,async(req,res,next)=>{
   let userId=req.session.user._id
   let myOrders=await userHelpers.getMyOrders(userId)
+  console.log(myOrders)
+  if(myOrders!=null){
   console.log('my Orders at user.js.....................')
   console.log(Object.keys(myOrders))
-  console.log(Object.values(myOrders))
+  console.log('If part is working successfully......')
   console.log(myOrders)
   let myOrderProd=myOrders.products
   let total=myOrders.total
@@ -179,14 +181,11 @@ router.get('/myOrders',verifyLogin,async(req,res,next)=>{
   let prodName=[];
    prod=await productHelpers.viewProducts(myOrderProd)
    prodName.push(prod)
-  // console.log('totallllllllllllllllllllllllllllll')
-    console.log(prodName)
- 
-  // console.log('my total at user.js.....................endingnggggggggggggggggg')
-  // console.log(myOrderProd)
-  // console.log('myOrdersssssssssssssssssssssss at user.js')
     res.render('user/shipmentDetails',{admin:false,user:req.session.user,myOrders:myOrderProd,total,status,username})
-
+  }else{
+    console.log('Else part is working..............')
+    res.redirect('/')
+  }
   
 
 })

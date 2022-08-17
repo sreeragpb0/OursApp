@@ -352,8 +352,9 @@ module.exports = {
         return new Promise(async(resolve,reject)=>{
             let myOrders=await db.get().collection(collection.ORDER_COLLECTION).findOne({userId:ObjectId(userId)})
             // console.log('user-helpers get myorders')
+            let status=true
             // console.log(myOrders)
-            resolve(myOrders)
+            resolve(myOrders,status)
         })
     }
 
